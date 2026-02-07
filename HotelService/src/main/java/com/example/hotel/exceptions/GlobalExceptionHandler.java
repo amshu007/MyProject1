@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
         map.put("status", HttpStatus.NOT_FOUND);
         map.put("success", false);
 
+//        ResponseEntity<Object> body = ResponseEntity.status(HttpStatus.FOUND).body(map).;
+//        ResponseEntity.status(HttpStatus.NO_CONTENT).header();
+
+
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
 
     }

@@ -18,7 +18,7 @@ public class RatingController {
     @Autowired
     RatingService ratingService;
 
-    @PostMapping
+    @PostMapping("/createUser")
     public ResponseEntity<Rating> create(@RequestBody Rating rating){
 
         String randomUserId = UUID.randomUUID().toString();
@@ -46,9 +46,9 @@ public class RatingController {
     }
 
     @GetMapping("/hotels/{hotelId}")
-    public ResponseEntity<List<Rating>> getRatingByHotelId(@PathVariable String hotelId){
+    public ResponseEntity<Rating> getRatingByHotelId(@PathVariable String hotelId){
 
-        List<Rating> ratings = ratingService.getRatingByUserId(hotelId);
+        Rating ratings = ratingService.getRatingByHotelId(hotelId);
 
         return ResponseEntity.ok(ratings);
     }
