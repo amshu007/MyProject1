@@ -4,6 +4,7 @@ import com.example.rating.entities.Hotel;
 import com.example.rating.entities.Rating;
 import com.example.rating.repositories.RatingRepository;
 import com.example.rating.services.RatingService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @CircuitBreaker(name = "ratingService1" , fallbackMethod = "getAvailableHotel")
     public Rating getRatingByHotelId(String hotelId) {
 
         Rating ratingObj = ratingRepository.findByHotelId(hotelId);
@@ -48,5 +50,15 @@ public class RatingServiceImpl implements RatingService {
 
         return ratingObj;
 
+    }
+
+    public Rating getAvailableHotel(Exception e){
+
+        Rating ratingObj = ratingRepository.findByHotelId("1");
+        Hotel hotel = new Hotel("5", "Dummy Hotel", "India", "Indian Hotel Service");
+
+        ratingObj.setHotel(hotel);
+
+        return ratingObj;
     }
 }
